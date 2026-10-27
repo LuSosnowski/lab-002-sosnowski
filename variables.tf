@@ -16,9 +16,12 @@ variable "common_resource_groups" {
   }))
   nullable = false
   default = {
-    common = { enabled = true, labs = "2-11" } # zasoby wspólne, trwałe
-
-    # TODO: Dodaj pozostałe grupy zasobów (krok 1)
+    common     = { enabled = true, labs = "2-11" } # zasoby wspólne, trwałe
+    basic      = { enabled = true, labs = "1-4" }
+    function   = { enabled = true, labs = "5-6" }
+    vm         = { enabled = true, labs = "7-9" }
+    advanced   = { enabled = true, labs = "10" }
+    industry40 = { enabled = true, labs = "11" }
   }
   validation {
     condition     = try(var.common_resource_groups["common"].enabled, false)
@@ -38,7 +41,7 @@ variable "location" {
   EOT
   nullable    = false
   type        = string
-  default     = "francecentral"
+  default     = "belgiumcentral"
 }
 
 variable "sops-encryption-key_name" {
@@ -54,7 +57,7 @@ variable "create_sops_key" {
   EOT
   type        = bool
   nullable    = false
-  default     = false
+  default     = true
 }
 
 # Opcjonalne: objectId principal-a (np. użytkownika `devops` -- część opcjonalna labu), któremu
@@ -76,7 +79,7 @@ variable "contact_emails" {
   raz w powłoce (Laboratorium 2), np.:
   export TF_VAR_contact_emails='["imie.nazwisko@student.pk.edu.pl","drugi.adres@example.com"]'
   EOT
-  default     = ["imie.nazwisko@student.pk.edu.pl", "drugi.adres@example.com"]
+  default     = ["lukasz.sosnowski@student.pk.edu.pl"]
   type        = list(string)
   nullable    = false
   validation {
